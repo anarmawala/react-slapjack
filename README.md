@@ -1,10 +1,11 @@
 # cs342_project5
 
 Game Ideas
- - UNO
- - slapjack
- - scrabble
- - jeopardy
- - go fish
- - pay or play 
+ - slapjack (very simple but unusual on computer bc involves speed so easier to play in person)
+ - scrabble (lots of moving parts)
+ - go fish (lots of server communication b/w players)
+ - pay or play (pretty simple)
  
+ Unlikely
+  - jeopardy (too simple)
+   - UNO (too many ppl doing same thing)
