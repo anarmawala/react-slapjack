@@ -1,0 +1,36 @@
+
+Username: <input type="text" id="someUserName" name="nameOfUser?">
+<input type="button" value="submit" onclick="myFunction()">
+
+
+<button type="button" onclick = "slapVarFunction()" >Slap!</button>
+
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+
+<script>
+var userNameVar;
+
+var socketConnection = io();
+
+socketConnection.emit('client-message', { someClientData: 'data from client' });
+
+socketConnection.on('serverMessage', function(data){
+    console.log(data.serverData);
+
+});
+
+function myFunction() {
+  alert("The form was submitted");
+userNameVar = document.getElementById("someUserName").value;
+console.log(userNameVar);
+socketConnection.emit('client-userName-submit', { clientUserNameSubmit: userNameVar });
+}
+
+
+var slapVarFunction = function(){
+
+    socketConnection.emit('client-slap', { clientUserName: userNameVar });
+
+}
+
+</script>
