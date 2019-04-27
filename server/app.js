@@ -3,14 +3,18 @@ const app = express(); // making instance of express app
 const cardShuffle = require('shuffle-array');
 // using express app for server variable
 const server = require('http').createServer(app);
-const uuidv1 = require('uuid/v1');
+// making connection instance
+const IOconnection = require('socket.io')(server, {});
 const clients = [];
+const players = [];
 const player1Cards = [];
 const player2Cards = [];
 const player3Cards = [];
 const player4Cards = [];
 const centerOfTable = [];
 let clientsJoined = 0;
+
+// loop through array & pass out cards
 
 // Cards
 const possibleValues = [
@@ -28,8 +32,8 @@ const possibleValues = [
   'K',
   'A',
 ];
-
 const possibleSuits = ['Clubs', 'Diamond', 'Hearts', 'Spades'];
+
 const imageNames = [
   '2C.png',
   '2D.png',
@@ -95,72 +99,75 @@ app.use('/client', express.static(__dirname + '/client'));
 server.listen(8080);
 console.log('Server starting on port 8080');
 
-// making connection instance
-const IOconnection = require('socket.io')(server, {});
-
 // this function runs when there is a new socket connection
 IOconnection.sockets.on('connection', function(socket) {
   // clients.push(socket); //pushing clients to array
   cardShuffle(imageNames);
-  const userName = uuidv1();
-  clients.push(userName);
+  clients.push(socket.id); // push socket.id to send private message to client
 
   clientsJoined++; // increment clients
   console.log('connection established: ' + clientsJoined);
   console.log(userName); // prints out username
 
   // shuffle out cards
-  // shuffle the array by looping, increment condtion by 4,  pass one to each player
-  // new game: need to reset deck & shuffle again
-  // if 4 clients not connected
-
-  // alternative: pass out the cards as players join the game
-  if (clientsJoined == 1) {
-    for (let i = 0; i < 13; i++) {
+  // FIXME: new game need to reset deck & shuffle again
+  if (clientsJoined == 4) {
+    for (let i = 0; i < 52; i = i + 4) {
       const card = imageNames.pop();
       player1Cards.push(card);
-    }
-  } else if (clientsJoined == 2) {
-    for (let i = 0; i < 13; i++) {
-      const card = imageNames.pop();
+
+      card = imageNames.pop();
       player2Cards.push(card);
-    }
-  } else if (clientsJoined == 3) {
-    for (let i = 0; i < 13; i++) {
-      const card = imageNames.pop();
+
+      card = imageNames.pop();
       player3Cards.push(card);
-    }
-  } else if (clientsJoined == 4) {
-    for (let i = 0; i < 13; i++) {
-      const card = imageNames.pop();
+
+      card = imageNames.pop();
       player4Cards.push(card);
     }
   }
 
-  // server instream reading message
-  socket.on('client-message', function(data) {
-    console.log('server received message from client');
-    console.log(data.someClientData);
-  });
-
-  // server sending out message with outstream
-  socket.emit('serverMessage', {serverData: 'hello from server'});
-
-  socket.emit('InitialUUID', {serverData: userName});
-
   socket.on('client-slap', function(data) {
     console.log('slap from the following user');
     console.log(data.clientUserName);
+
+    //If top card for center of table is jack → move card to winner’s hand
+    const topCard = centerOfTable.get(centerOfTable.length - 1);
+    
+    // if(topCard.charAt(0) == 'J'){
+    //   //a jack card was slapped
+
+    //   if(data.clientUserName == 'player1') {
+        
+    //   } 
+    // }
+
   });
 
   socket.on('play-hand', function(data) {
-    console.log('client wants to play hand');
-    // pop a card from end of array
-    if (data.clientUserName == 'player1') {
-      const card = player1Cards.pop();
-      socket.emit('send-card', {cardData: card});
-      // need to have condition on client side of which player they are
+    // FIXME: only allow this once all four clients joined
+    if (clientsJoined == 4) {
+      const card;
+      // pop a card from end of array
+      if (data.clientNumber == 'player1') {
+        card = player1Cards.pop();
+        io.sockets.connected[clients[0]].emit(card); // catch this on client side
+      } else if (data.clientNumber == 'player2') {
+        card = player2Cards.pop();
+        io.sockets.connected[clients[1]].emit(card); 
+      }
+      else if (data.clientNumber == 'player3') {
+        card = player3Cards.pop();
+        io.sockets.connected[clients[2]].emit(card); 
+      }
+      else if (data.clientNumber == 'player4') {
+        card = player4Cards.pop();
+        io.sockets.connected[clients[3]].emit(card); 
+      }
     }
+
+    //update center of table 
+    centerOfTable.push(card); // FIXME: make sure to update images on client 
   });
 
   socket.on('client-userName-submit', function(data) {
@@ -169,4 +176,7 @@ IOconnection.sockets.on('connection', function(socket) {
 
     console.log(enteredName);
   });
+
+
+
 });
