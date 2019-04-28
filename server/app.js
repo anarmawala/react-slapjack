@@ -128,8 +128,7 @@ IOconnection.sockets.on('connection', (socket) => {
   }
 
   socket.on('client-slap', (data) => {
-    console.log('slap from the following user');
-    console.log(data.clientUserName);
+    console.log('slap from the following user' + data.clientUserName);
 
     //If top card for center of table is jack → move card to winner’s hand
     const topCard = centerOfTable.get(centerOfTable.length - 1);
