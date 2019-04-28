@@ -90,7 +90,7 @@ const imageNames = [
 ];
 
 // handles routing for static files
-app.get('/', function(request, response) {
+app.get('/', (request, response) => {
   response.sendFile(__dirname + '/client/index.html');
 });
 
@@ -100,7 +100,7 @@ server.listen(8080);
 console.log('Server starting on port 8080');
 
 // this function runs when there is a new socket connection
-IOconnection.sockets.on('connection', function(socket) {
+IOconnection.sockets.on('connection', (socket) => {
   // clients.push(socket); //pushing clients to array
   cardShuffle(imageNames);
   clients.push(socket.id); // push socket.id to send private message to client
@@ -127,7 +127,7 @@ IOconnection.sockets.on('connection', function(socket) {
     }
   }
 
-  socket.on('client-slap', function(data) {
+  socket.on('client-slap', (data) => {
     console.log('slap from the following user');
     console.log(data.clientUserName);
 
@@ -144,7 +144,7 @@ IOconnection.sockets.on('connection', function(socket) {
 
   });
 
-  socket.on('play-hand', function(data) {
+  socket.on('play-hand', (data) => {
     // FIXME: only allow this once all four clients joined
     if (clientsJoined == 4) {
       const card;
@@ -170,7 +170,7 @@ IOconnection.sockets.on('connection', function(socket) {
     centerOfTable.push(card); // FIXME: make sure to update images on client 
   });
 
-  socket.on('client-userName-submit', function(data) {
+  socket.on('client-userName-submit', (data) => {
     console.log('user name was submitted');
     const enteredName = data.clientUserNameSubmit;
 
