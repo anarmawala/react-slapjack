@@ -27,7 +27,7 @@ const NameInput = (props) => {
 
     console.log(user);
 
-    const socket = openSocket('10.107.213.140', {
+    const socket = openSocket('127.0.0.1:8080', {
       name: user
     });
 

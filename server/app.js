@@ -1,7 +1,7 @@
 const express = require('express'); // including the express framework
 const cors = require('cors');
 const app = express(); // making instance of express app
-app.use(cors());
+//app.use(cors());
 const cardShuffle = require('shuffle-array');
 // using express app for server variable
 const server = require('http').createServer(app);
@@ -105,6 +105,8 @@ console.log('Server starting on port 8080');
 
 // this function runs when there is a new socket connection
 IOconnection.sockets.on('connection', (socket) => {
+
+  console.log(socket.data);
   // clients.push(socket); //pushing clients to array
   cardShuffle(imageNames);
   clients.push(socket.id); // push socket.id to send private message to client
