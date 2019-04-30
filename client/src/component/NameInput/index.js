@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AwesomeButton } from 'react-awesome-button';
 import AwesomeButtonStyles from 'react-awesome-button/src/styles/styles.scss';
 
-const io = require('socket.io');
+import openSocket from 'socket.io-client';
 
 const styles = {
   form: {
@@ -27,7 +27,7 @@ const NameInput = (props) => {
 
     console.log(user);
 
-    io('10.107.213.140', {
+    const socket = openSocket('10.107.213.140', {
       name: user
     });
 
