@@ -129,72 +129,62 @@ IOconnection.sockets.on('connection', (socket) => {
   }
 
   socket.on('client-slap', (data) => {
-    
-    if(slapped == false){
-      slapped = true; //how do I change to false for next jack but avoid executing this for multiple clients for a single jack?
-    
+    if (slapped == false) {
+      slapped = true; // how do I change to false for next jack but avoid executing this for multiple clients for a single jack?
+
       console.log('slap from the following user' + data.clientNumber);
 
-      //If top card for center of table is jack → move card to winner’s hand
+      // If top card for center of table is jack → move card to winner’s hand
       const topCard = centerOfTable.get(centerOfTable.length - 1);
 
-      if(topCard.charAt(0) == 'J'){ //if topCard equals any of the 4 jacks
-        
-        //move cards from center of table to hand of first player to slap
-        if(data.clientNumber == 'player1') {
-            player1Cards.concat(centerOfTable);
-            socket.emit("player 1 won the slap");
-        }
-        else if(data.clientNumber == 'player2') {
-          player2Cards.concat(centerOfTable);
-          socket.emit("player 2 won the slap");
-        }
-        else if(data.clientNumber == 'player3') {
-          player3Cards.concat(centerOfTable);
-          socket.emit("player 3 won the slap");
-        }
-        else if(data.clientNumber == 'player4') {
-          player4Cards.concat(centerOfTable);
-          socket.emit("player 4 won the slap");
-        }
-      }
-      else{
-        //jack was not slapped ==> slapping player needs to give a card to player that put down card
-        //need to track who played last card
-      } 
+      if (topCard.charAt(0) == 'J') {
+        // if topCard equals any of the 4 jacks
 
+        // move cards from center of table to hand of first player to slap
+        if (data.clientNumber == 'player1') {
+          player1Cards.concat(centerOfTable);
+          socket.emit('player 1 won the slap');
+        } else if (data.clientNumber == 'player2') {
+          player2Cards.concat(centerOfTable);
+          socket.emit('player 2 won the slap');
+        } else if (data.clientNumber == 'player3') {
+          player3Cards.concat(centerOfTable);
+          socket.emit('player 3 won the slap');
+        } else if (data.clientNumber == 'player4') {
+          player4Cards.concat(centerOfTable);
+          socket.emit('player 4 won the slap');
+        }
+      } else {
+        // jack was not slapped ==> slapping player needs to give a card to player that put down card
+        // need to track who played last card
+      }
+    } else {
+      // other player already slapped --> send message to client?
     }
-    else{
-      //other player already slapped --> send message to client? 
-    }
-  
-      
-  }); 
+  });
 
   socket.on('play-hand', (data) => {
     // FIXME: only allow this once all four clients joined
     if (clientsJoined == 4) {
-      const card;
+      const card = null;
       // pop a card from end of array
       if (data.clientNumber == 'player1') {
         card = player1Cards.pop();
         io.sockets.connected[clients[0]].emit(card); // catch this on client side
       } else if (data.clientNumber == 'player2') {
         card = player2Cards.pop();
-        io.sockets.connected[clients[1]].emit(card); 
-      }
-      else if (data.clientNumber == 'player3') {
+        io.sockets.connected[clients[1]].emit(card);
+      } else if (data.clientNumber == 'player3') {
         card = player3Cards.pop();
-        io.sockets.connected[clients[2]].emit(card); 
-      }
-      else if (data.clientNumber == 'player4') {
+        io.sockets.connected[clients[2]].emit(card);
+      } else if (data.clientNumber == 'player4') {
         card = player4Cards.pop();
-        io.sockets.connected[clients[3]].emit(card); 
+        io.sockets.connected[clients[3]].emit(card);
       }
     }
 
-    //update center of table 
-    centerOfTable.push(card); // FIXME: make sure to update images on client 
+    // update center of table
+    centerOfTable.push(card); // FIXME: make sure to update images on client
   });
 
   socket.on('client-userName-submit', (data) => {
@@ -203,7 +193,4 @@ IOconnection.sockets.on('connection', (socket) => {
 
     console.log(enteredName);
   });
-
-
-
 });
