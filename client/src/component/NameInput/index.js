@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { AwesomeButton } from 'react-awesome-button';
 import AwesomeButtonStyles from 'react-awesome-button/src/styles/styles.scss';
 
+const io = require('socket.io');
+
 const styles = {
   form: {
     marginTop: '10pt'
@@ -24,6 +26,11 @@ const NameInput = (props) => {
     e.preventDefault();
 
     console.log(user);
+
+    io('10.107.213.140', {
+      name: user
+    });
+
     setUser('');
   };
 
