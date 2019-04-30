@@ -14,6 +14,7 @@ const player4Cards = [];
 const centerOfTable = [];
 const slapped = false;
 let clientsJoined = 0;
+// const playedLastCard;
 
 // loop through array & pass out cards
 
@@ -108,7 +109,6 @@ IOconnection.sockets.on('connection', (socket) => {
 
   clientsJoined++; // increment clients
   console.log('connection established: ' + clientsJoined);
-  console.log(userName); // prints out username
 
   // shuffle out cards
   // FIXME: new game need to reset deck & shuffle again
@@ -157,10 +157,37 @@ IOconnection.sockets.on('connection', (socket) => {
           player4Cards.concat(centerOfTable);
           socket.emit("player 4 won the slap");
         }
+
+        //clear center of table
+        centerOfTable.splice(0, centerOfTable.length);
+        //message to clear center of table in GUI
+        socket.emit("clear-table");
+
       }
       else{
         //jack was not slapped ==> slapping player needs to give a card to player that put down card
         //need to track who played last card
+        const card = null;
+
+        if(data.clientNumber == 'player1') {
+          card = player1Cards.pop();
+      
+          //FIXME: need a better way for this
+          if(playedLastCard == 'player2'){
+            player2Cards.push(card);
+          }
+
+        }
+        else if(data.clientNumber == 'player2') {
+
+        }
+        else if(data.clientNumber == 'player3') {
+
+        }
+        else if(data.clientNumber == 'player4') {
+  
+        }
+        
       } 
 
     }
@@ -168,33 +195,37 @@ IOconnection.sockets.on('connection', (socket) => {
       //other player already slapped --> send message to client? 
     }
   
-      
   }); 
 
   socket.on('play-hand', (data) => {
     // FIXME: only allow this once all four clients joined
     if (clientsJoined == 4) {
       const card;
-      // pop a card from end of array
-      if (data.clientNumber == 'player1') {
+      //pop a card from end of array
+      if(data.clientNumber == 'player1') {
+        playedLastCard = 'player1';
         card = player1Cards.pop();
-        io.sockets.connected[clients[0]].emit(card); // catch this on client side
+        io.sockets.connected[clients[0]].emit('send-card', card); // catch this on client side 
       } else if (data.clientNumber == 'player2') {
+        playedLastCard = 'player2';
         card = player2Cards.pop();
-        io.sockets.connected[clients[1]].emit(card); 
+        io.sockets.connected[clients[1]].emit('send-card', card);
       }
       else if (data.clientNumber == 'player3') {
+        playedLastCard = 'player3';
         card = player3Cards.pop();
-        io.sockets.connected[clients[2]].emit(card); 
+        io.sockets.connected[clients[2]].emit('send-card', card);
       }
       else if (data.clientNumber == 'player4') {
+        playedLastCard = 'player4';
         card = player4Cards.pop();
-        io.sockets.connected[clients[3]].emit(card); 
+        io.sockets.connected[clients[3]].emit('send-card', card);
       }
     }
 
     //update center of table 
     centerOfTable.push(card); // FIXME: make sure to update images on client 
+    //emit another message to change top card for center of table
   });
 
   socket.on('client-userName-submit', (data) => {
