@@ -5,7 +5,7 @@
  */
 class Slapjack {
   /**
-   * Initializes the variable
+   * Initializes the variables
    */
   constructor() {
     this.players = [];

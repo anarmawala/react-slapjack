@@ -129,33 +129,30 @@ IOconnection.sockets.on('connection', (socket) => {
   }
 
   socket.on('client-slap', (data) => {
-    
-    if(slapped == false){
-      slapped = true; //how do I change to false for next jack but avoid executing this for multiple clients for a single jack?
-    
+    //will only execute is slap is true
+    if (data.slapped == true) {
+      // how do I change to false for next jack but avoid executing this for multiple clients for a single jack?
       console.log('slap from the following user' + data.clientNumber);
 
-      //If top card for center of table is jack → move card to winner’s hand
+      // If top card for center of table is jack → move card to winner’s hand
       const topCard = centerOfTable.get(centerOfTable.length - 1);
 
-      if(topCard.charAt(0) == 'J'){ //if topCard equals any of the 4 jacks
-        
-        //move cards from center of table to hand of first player to slap
-        if(data.clientNumber == 'player1') {
-            player1Cards.concat(centerOfTable);
-            socket.emit("player 1 won the slap");
-        }
-        else if(data.clientNumber == 'player2') {
+      if (topCard.charAt(0) == 'J') {
+        // if topCard equals any of the 4 jacks
+
+        // move cards from center of table to hand of first player to slap
+        if (data.clientNumber == 'player1') {
+          player1Cards.concat(centerOfTable);
+          socket.emit('player 1 won the slap');
+        } else if (data.clientNumber == 'player2') {
           player2Cards.concat(centerOfTable);
-          socket.emit("player 2 won the slap");
-        }
-        else if(data.clientNumber == 'player3') {
+          socket.emit('player 2 won the slap');
+        } else if (data.clientNumber == 'player3') {
           player3Cards.concat(centerOfTable);
-          socket.emit("player 3 won the slap");
-        }
-        else if(data.clientNumber == 'player4') {
+          socket.emit('player 3 won the slap');
+        } else if (data.clientNumber == 'player4') {
           player4Cards.concat(centerOfTable);
-          socket.emit("player 4 won the slap");
+          socket.emit('player 4 won the slap');
         }
 
         //clear center of table
@@ -234,7 +231,4 @@ IOconnection.sockets.on('connection', (socket) => {
 
     console.log(enteredName);
   });
-
-
-
 });
