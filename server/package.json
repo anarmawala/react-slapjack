@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "app.js",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.16.4",
+    "shuffle-array": "^1.0.1",
     "socket.io": "^1.7.4",
     "uuid": "^3.3.2"
   },

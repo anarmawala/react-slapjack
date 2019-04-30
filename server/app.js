@@ -1,5 +1,7 @@
 const express = require('express'); // including the express framework
+const cors = require('cors');
 const app = express(); // making instance of express app
+app.use(cors());
 const cardShuffle = require('shuffle-array');
 // using express app for server variable
 const server = require('http').createServer(app);
@@ -129,7 +131,7 @@ IOconnection.sockets.on('connection', (socket) => {
   }
 
   socket.on('client-slap', (data) => {
-    //will only execute is slap is true
+    // will only execute is slap is true
     if (data.slapped == true) {
       // how do I change to false for next jack but avoid executing this for multiple clients for a single jack?
       console.log('slap from the following user' + data.clientNumber);
@@ -155,74 +157,60 @@ IOconnection.sockets.on('connection', (socket) => {
           socket.emit('player 4 won the slap');
         }
 
-        //clear center of table
+        // clear center of table
         centerOfTable.splice(0, centerOfTable.length);
-        //message to clear center of table in GUI
-        socket.emit("clear-table");
-
-      }
-      else{
-        //jack was not slapped ==> slapping player needs to give a card to player that put down card
-        //need to track who played last card
+        // message to clear center of table in GUI
+        socket.emit('clear-table');
+      } else {
+        // jack was not slapped ==> slapping player needs to give a card to player that put down card
+        // need to track who played last card
         const card = null;
 
-        if(data.clientNumber == 'player1') {
+        if (data.clientNumber == 'player1') {
           card = player1Cards.pop();
-      
-          //FIXME: need a better way for this
-          if(playedLastCard == 'player2'){
+
+          // FIXME: need a better way for this
+          if (playedLastCard == 'player2') {
             player2Cards.push(card);
           }
-
+        } else if (data.clientNumber == 'player2') {
+        } else if (data.clientNumber == 'player3') {
+        } else if (data.clientNumber == 'player4') {
         }
-        else if(data.clientNumber == 'player2') {
-
-        }
-        else if(data.clientNumber == 'player3') {
-
-        }
-        else if(data.clientNumber == 'player4') {
-  
-        }
-        
-      } 
-
+      }
+    } else {
+      // other player already slapped --> send message to client?
     }
-    else{
-      //other player already slapped --> send message to client? 
-    }
-  
-  }); 
+  });
 
   socket.on('play-hand', (data) => {
     // FIXME: only allow this once all four clients joined
     if (clientsJoined == 4) {
-      const card;
-      //pop a card from end of array
-      if(data.clientNumber == 'player1') {
+      const card = null;
+      // pop a card from end of array
+      if (data.clientNumber == 'player1') {
         playedLastCard = 'player1';
         card = player1Cards.pop();
-        io.sockets.connected[clients[0]].emit('send-card', card); // catch this on client side 
+        io.sockets.connected[clients[0]].emit('send-card', card); // catch this on client side
       } else if (data.clientNumber == 'player2') {
         playedLastCard = 'player2';
+
         card = player2Cards.pop();
         io.sockets.connected[clients[1]].emit('send-card', card);
-      }
-      else if (data.clientNumber == 'player3') {
+      } else if (data.clientNumber == 'player3') {
         playedLastCard = 'player3';
         card = player3Cards.pop();
         io.sockets.connected[clients[2]].emit('send-card', card);
-      }
-      else if (data.clientNumber == 'player4') {
+      } else if (data.clientNumber == 'player4') {
         playedLastCard = 'player4';
         card = player4Cards.pop();
         io.sockets.connected[clients[3]].emit('send-card', card);
       }
     }
 
-    //update center of table 
-    centerOfTable.push(card); // FIXME: make sure to update images on client 
-    //emit another message to change top card for center of table
+    // update center of table
+    centerOfTable.push(card); // FIXME: make sure to update images on client
+    // emit another message to change top card for center of table
   });
 
   socket.on('client-userName-submit', (data) => {
