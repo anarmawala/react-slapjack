@@ -129,9 +129,9 @@ IOconnection.sockets.on('connection', (socket) => {
   }
 
   socket.on('client-slap', (data) => {
-    if (slapped == false) {
-      slapped = true; // how do I change to false for next jack but avoid executing this for multiple clients for a single jack?
-
+    //will only execute is slap is true
+    if (data.slapped == true) {
+      // how do I change to false for next jack but avoid executing this for multiple clients for a single jack?
       console.log('slap from the following user' + data.clientNumber);
 
       // If top card for center of table is jack → move card to winner’s hand

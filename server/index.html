@@ -1,36 +1,61 @@
+<!doctype html>
+<html>
+	<head>
+	<title> SlapJack Game </title>
+	
+	<style></style>
+	
+	</head>
+	
+	<body>
+		Username: <input type="text" id="someUserName" name="nameOfUser?">
+		<input type="button" value="submit" onclick="myFunction()">
+		<button type="button" onclick = "slapVarFunction(true)" >Slap!</button>
+	</body>
+	
+	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 
-Username: <input type="text" id="someUserName" name="nameOfUser?">
-<input type="button" value="submit" onclick="myFunction()">
+	<script>
+		var userNameVar;
+
+		var socketConnection = io();
+
+		socketConnection.emit('client-message', { someClientData: 'data from client' });
+
+		socketConnection.on('serverMessage', function(data){
+			console.log(data.serverData);
+
+		});
+
+		function myFunction() {
+			alert("The form was submitted");
+			userNameVar = document.getElementById("someUserName").value;
+			console.log(userNameVar);
+			socketConnection.emit('client-userName-submit', { clientUserNameSubmit: userNameVar });
+		}
 
 
-<button type="button" onclick = "slapVarFunction()" >Slap!</button>
+		var slapVarFunction = function(isPress){
 
-<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+			socketConnection.emit('client-slap', { clientUserName: userNameVar , slapped: isPress});
 
-<script>
-var userNameVar;
-
-var socketConnection = io();
-
-socketConnection.emit('client-message', { someClientData: 'data from client' });
-
-socketConnection.on('serverMessage', function(data){
-    console.log(data.serverData);
-
-});
-
-function myFunction() {
-  alert("The form was submitted");
-userNameVar = document.getElementById("someUserName").value;
-console.log(userNameVar);
-socketConnection.emit('client-userName-submit', { clientUserNameSubmit: userNameVar });
-}
-
-
-var slapVarFunction = function(){
-
-    socketConnection.emit('client-slap', { clientUserName: userNameVar });
-
-}
-
-</script>
+		}
+		
+		//Keyboard
+		document.addEventListener("keydown", keyDownHandler, false);
+		document.addEventListener("keyup", keyUpHandler, false);
+		
+		function keyDownHandler(event){
+			if(event.keyCode == 83) //slap with key s
+				slapVarFunction(true);
+			else if(event.keyCode == 80) //play with key p
+				//ADD function for playing card
+		}
+		
+		function keyUpHandler(event) {
+			//Add state variable so that when key is released it is set to false
+			if(even.keyCode == 83) 
+				slapVarFunction(false);
+		}
+	</script>
+</html>
