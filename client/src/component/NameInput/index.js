@@ -7,7 +7,7 @@ import { consumerSocket } from '../Socket/context';
 
 const styles = {
   form: {
-    marginTop: '10pt'
+    marginTop: '4px'
   },
   input: {
     padding: '12px',
@@ -25,16 +25,17 @@ const NameInput = (props) => {
   const [user, setUser] = useState('Anonymous');
   const [IP, setIP] = useState('127.0.0.1');
   const [port, setPort] = useState('8080');
-
-  let hasSubmited = false;
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    props.initSocket(IP, port, user);
+    if (!isSubmitted) {
+      props.initSocket(IP, port, user);
 
-    setUser('');
-    hasSubmited = true;
+      setUser('');
+      setIsSubmitted(true);
+    }
   };
 
   return (
@@ -42,7 +43,6 @@ const NameInput = (props) => {
       <input
         type="text"
         value={IP}
-        disabled={hasSubmited}
         placeholder="IP"
         style={styles.input}
         onChange={(e) => {
@@ -63,7 +63,6 @@ const NameInput = (props) => {
       <input
         type="text"
         value={port}
-        disabled={hasSubmited}
         placeholder="Port"
         style={styles.input}
         onChange={(e) => {
@@ -84,7 +83,6 @@ const NameInput = (props) => {
       <input
         type="text"
         value={user}
-        disabled={hasSubmited}
         placeholder="Name"
         style={styles.input}
         onChange={(e) => {
@@ -104,7 +102,11 @@ const NameInput = (props) => {
         }}
       />
       <br />
-      <AwesomeButton cssModule={AwesomeButtonStyles} ripple type="primary">
+      <AwesomeButton
+        cssModule={AwesomeButtonStyles}
+        ripple
+        type="primary"
+        disabled={isSubmitted}>
         Button
       </AwesomeButton>
     </form>

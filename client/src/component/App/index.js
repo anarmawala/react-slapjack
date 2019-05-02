@@ -14,8 +14,11 @@ const App = (props) => {
 
   return (
     <div className="App App-header">
-      <h1 style={{ marginBottom: '5px' }}>SlapJack</h1>
-      <p style={{ marginTop: '5px' }}>Brought to you by group 6 in CS 342</p>
+      <h1 style={{ marginBottom: '5px' }}>Slapjack</h1>
+      <p style={{ marginTop: '5px' }}>
+        Brought to you by <br />
+        Arshad | Jigar | Angela | Clark
+      </p>
 
       {props.value == null && (
         <NameInput

@@ -9,25 +9,6 @@ export const consumerSocket = (Component) => (props) => (
   </SocketContext.Consumer>
 );
 
-// export const providerSocket = (Component) => (props) => {
-//   const [socket, setSocket] = useState(null);
-
-//   return (
-//     <SocketContext.Provider value={null}>
-//       <Component
-//         {...this.props}
-//         initializeSocket={(ip, port, name) => {
-//           setSocket(
-//             io.openSocket(ip + ':' + port, {
-//               query: 'name=' + name
-//             })
-//           );
-//         }}
-//       />
-//     </SocketContext.Provider>
-//   );
-// };
-
 export const providerSocket = (Component) => {
   class ProviderSocket extends React.Component {
     constructor(props) {
@@ -44,11 +25,15 @@ export const providerSocket = (Component) => {
           <Component
             {...this.props}
             initializeSocket={(ip, port, name) => {
-              this.setState({
-                socket: io(ip + ':' + port, {
-                  query: 'name=' + name
-                })
-              });
+              if (this.state.socket === null) {
+                this.setState({
+                  socket: io(ip + ':' + port, {
+                    query: 'name=' + name
+                  })
+                });
+              } else {
+                alert('Socket already running');
+              }
             }}
           />
         </SocketContext.Provider>
