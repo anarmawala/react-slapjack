@@ -16,6 +16,8 @@ const player4Cards = [];
 const centerOfTable = [];
 const slapped = false;
 let clientsJoined = 0;
+
+import Slapjack from './Slapjack';
 // const playedLastCard;
 
 // loop through array & pass out cards
@@ -113,6 +115,7 @@ IOconnection.sockets.on('connection', (socket) => {
   clientsJoined++; // increment clients
   console.log('connection established: ' + clientsJoined);
 
+  IOconnection.emit('hello');
   // shuffle out cards
   // FIXME: new game need to reset deck & shuffle again
   if (clientsJoined == 4) {

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { compose } from 'recompose';
 import { AwesomeButton } from 'react-awesome-button';
 import AwesomeButtonStyles from 'react-awesome-button/src/styles/styles.scss';
 
-import openSocket from 'socket.io-client';
+import { consumerSocket } from '../Socket/context';
 
 const styles = {
   form: {
@@ -14,6 +15,7 @@ const styles = {
     fontWeight: 'bold',
     borderRadius: '5px',
     marginRight: '1em',
+    marginBottom: '1em',
     backgroundColor: 'gray',
     border: 'none'
   }
@@ -29,11 +31,8 @@ const NameInput = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const socket = openSocket(IP + ':' + port, {
-      query: 'name=' + user
-    });
+    props.initSocket(IP, port, user);
 
-    socket.emit('hello server');
     setUser('');
     hasSubmited = true;
   };
@@ -72,7 +71,7 @@ const NameInput = (props) => {
           setUser(e.target.value);
         }}
       />
-
+      <br />
       <AwesomeButton cssModule={AwesomeButtonStyles} ripple type="primary">
         Button
       </AwesomeButton>
@@ -80,4 +79,4 @@ const NameInput = (props) => {
   );
 };
 
-export default NameInput;
+export default compose(consumerSocket)(NameInput);
