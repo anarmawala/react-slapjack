@@ -6,7 +6,7 @@
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "shuffle-array": "^1.0.1",
-    "socket.io": "^1.7.4",
+    "socket.io": "^2.2.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
