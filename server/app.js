@@ -17,11 +17,6 @@ const centerOfTable = [];
 const slapped = false;
 let clientsJoined = 0;
 
-import Slapjack from './Slapjack';
-// const playedLastCard;
-
-// loop through array & pass out cards
-
 // Cards
 const possibleValues = [
   '2',
