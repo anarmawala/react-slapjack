@@ -110,7 +110,9 @@ IOconnection.sockets.on('connection', (socket) => {
   clientsJoined++; // increment clients
   console.log('connection established: ' + clientsJoined);
 
-  socket.emit('Welcome');
+  socket.emit('Welcome to Slapjack');
+  IOconnection.emit('Player connected', socket.handshake.query.name);
+
   // shuffle out cards
   // FIXME: new game need to reset deck & shuffle again
   if (clientsJoined == 4) {

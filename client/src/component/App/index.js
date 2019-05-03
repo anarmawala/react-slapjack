@@ -14,12 +14,19 @@ const App = (props) => {
     <div className="App App-header">
       {/* {props.socket !== null && <div>{JSON.stringify(props.socket)}</div>} */}
 
-      {true && (
+      {props.socket === null && (
         <NameInput
           initSocket={(IP, port, user) =>
             props.initializeSocket(IP, port, user)
           }
         />
+      )}
+
+      {props.socket !== null && props.socket.disconnected && (
+        <div>Connecting</div>
+      )}
+      {props.socket !== null && props.socket.connected && (
+        <div>Hello there</div>
       )}
     </div>
   );

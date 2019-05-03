@@ -123,8 +123,7 @@ const NameInput = (props) => {
       </form>
 
       <React.Fragment>
-        {/* {props.socket.disconnected && <div>Connecting</div>} */}
-        {true && (
+        {/* {true && (
           <div>
             Hello{' '}
             {JSON.stringify(props.socket, function(key, val) {
@@ -137,7 +136,7 @@ const NameInput = (props) => {
               return val;
             })}
           </div>
-        )}
+        )} */}
       </React.Fragment>
     </React.Fragment>
   );
