@@ -110,7 +110,7 @@ IOconnection.sockets.on('connection', (socket) => {
   clientsJoined++; // increment clients
   console.log('connection established: ' + clientsJoined);
 
-  IOconnection.emit('hello');
+  socket.emit('Welcome');
   // shuffle out cards
   // FIXME: new game need to reset deck & shuffle again
   if (clientsJoined == 4) {
@@ -144,22 +144,22 @@ IOconnection.sockets.on('connection', (socket) => {
         // move cards from center of table to hand of first player to slap
         if (data.clientNumber == 'player1') {
           player1Cards.concat(centerOfTable);
-          socket.emit('player 1 won the slap');
+          IOconnection.emit('player 1 won the slap');
         } else if (data.clientNumber == 'player2') {
           player2Cards.concat(centerOfTable);
-          socket.emit('player 2 won the slap');
+          IOconnection.emit('player 2 won the slap');
         } else if (data.clientNumber == 'player3') {
           player3Cards.concat(centerOfTable);
-          socket.emit('player 3 won the slap');
+          IOconnection.emit('player 3 won the slap');
         } else if (data.clientNumber == 'player4') {
           player4Cards.concat(centerOfTable);
-          socket.emit('player 4 won the slap');
+          IOconnection.emit('player 4 won the slap');
         }
 
         // clear center of table
         centerOfTable.splice(0, centerOfTable.length);
         // message to clear center of table in GUI
-        socket.emit('clear-table');
+        IOconnection.emit('clear-table');
       } else {
         // jack was not slapped ==> slapping player needs to give a card to player that put down card
         // need to track who played last card
