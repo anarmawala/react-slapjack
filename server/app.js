@@ -186,8 +186,8 @@ IOconnection.sockets.on('connection', (socket) => {
 
   socket.on('play-hand', (data) => {
     // FIXME: only allow this once all four clients joined
+    const card = null;
     if (clientsJoined == 4) {
-      const card = null;
       // pop a card from end of array
       if (data.clientNumber == 'player1') {
         playedLastCard = 'player1';

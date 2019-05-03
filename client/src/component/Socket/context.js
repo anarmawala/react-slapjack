@@ -35,6 +35,11 @@ export const providerSocket = (Component) => {
                   socket: _socket
                 });
 
+                _socket.on('connect', (param) => {
+                  console.log('Welcome to Slapjackv2');
+                  this.setState({ socket: _socket });
+                });
+
                 _socket.on('Welcome to Slapjack', (param) => {
                   console.log('Welcome to Slapjack');
                   this.setState({ socket: _socket });
