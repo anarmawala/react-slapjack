@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as io from 'socket.io-client';
-
+import * as _ from 'lodash';
 const SocketContext = React.createContext(null);
 
 export const consumerSocket = (Component) => (props) => (
@@ -24,12 +24,19 @@ export const providerSocket = (Component) => {
         <SocketContext.Provider value={this.state.socket}>
           <Component
             {...this.props}
+            socket={this.state.socket}
             initializeSocket={(ip, port, name) => {
               if (this.state.socket === null) {
+                let _socket = io(ip + ':' + port, {
+                  query: 'name=' + name
+                });
+
                 this.setState({
-                  socket: io(ip + ':' + port, {
-                    query: 'name=' + name
-                  })
+                  socket: _socket
+                });
+
+                _socket.on('hello', () => {
+                  this.setState({ socket: _socket });
                 });
               } else {
                 alert('Socket already running');
