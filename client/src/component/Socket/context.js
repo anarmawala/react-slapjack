@@ -36,17 +36,7 @@ export const providerSocket = (Component) => {
                 });
 
                 _socket.on('connect', (param) => {
-                  console.log('Welcome to Slapjackv2');
                   this.setState({ socket: _socket });
-                });
-
-                _socket.on('Welcome to Slapjack', (param) => {
-                  console.log('Welcome to Slapjack');
-                  this.setState({ socket: _socket });
-                });
-
-                _socket.on('Player connected', (param) => {
-                  console.log('Player connected ' + param);
                 });
               } else {
                 alert('Socket already running');

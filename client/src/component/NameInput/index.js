@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { compose } from 'recompose';
-import { consumerSocket } from '../Socket/context';
 
 const styles = {
   form: {
@@ -31,7 +30,7 @@ const NameInput = (props) => {
   const [IP, setIP] = useState('127.0.0.1');
   const [port, setPort] = useState('8080');
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const seen = [];
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -121,25 +120,8 @@ const NameInput = (props) => {
           Submit
         </button>
       </form>
-
-      <React.Fragment>
-        {/* {true && (
-          <div>
-            Hello{' '}
-            {JSON.stringify(props.socket, function(key, val) {
-              if (val != null && typeof val == 'object') {
-                if (seen.indexOf(val) >= 0) {
-                  return;
-                }
-                seen.push(val);
-              }
-              return val;
-            })}
-          </div>
-        )} */}
-      </React.Fragment>
     </React.Fragment>
   );
 };
 
-export default compose(consumerSocket)(NameInput);
+export default compose()(NameInput);

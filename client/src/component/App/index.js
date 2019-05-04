@@ -4,6 +4,7 @@ import './App.css';
 
 import { providerSocket } from '../Socket/context';
 import NameInput from '../NameInput';
+import Navigation from '../Navigation';
 
 const App = (props) => {
   // socket.on('hello', () => {
@@ -25,9 +26,7 @@ const App = (props) => {
       {props.socket !== null && props.socket.disconnected && (
         <div>Connecting</div>
       )}
-      {props.socket !== null && props.socket.connected && (
-        <div>Hello there</div>
-      )}
+      {props.socket !== null && props.socket.connected && <Navigation />}
     </div>
   );
 };
