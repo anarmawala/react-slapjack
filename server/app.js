@@ -31,7 +31,7 @@ const possibleValues = [
   'J',
   'Q',
   'K',
-  'A'
+  'A',
 ];
 const possibleSuits = ['Clubs', 'Diamond', 'Hearts', 'Spades'];
 
@@ -87,7 +87,7 @@ const imageNames = [
   'AC.png',
   'AD.png',
   'AH.png',
-  'AS.png'
+  'AS.png',
 ];
 
 // handles routing for static files
@@ -107,15 +107,15 @@ IOconnection.sockets.on('connection', (socket) => {
   cardShuffle(imageNames);
   clientsJoined++; // increment clients
   console.log(
-    'connection established with' +
+      'connection established with' +
       socket.handshake.query.name +
       ' : ' +
       clientsJoined
   );
 
   socket.emit(
-    'Existing players',
-    clients.map((csocket) => csocket.handshake.query.name)
+      'Existing players',
+      clients.map((csocket) => csocket.handshake.query.name)
   );
   IOconnection.emit('Player connected', socket.handshake.query.name);
 
@@ -171,7 +171,9 @@ IOconnection.sockets.on('connection', (socket) => {
         // message to clear center of table in GUI
         IOconnection.emit('clear-table');
       } else {
-        // jack was not slapped ==> slapping player needs to give a card to player that put down card
+        // jack was not slapped
+        // ==> slapping player needs to give a card to player that put down card
+
         // need to track who played last card
         const card = null;
 
@@ -200,25 +202,25 @@ IOconnection.sockets.on('connection', (socket) => {
       if (data.clientNumber == 'player1') {
         playedLastCard = 'player1';
         card = player1Cards.pop();
-        IOconnection.emit('send-card', { clientCard: card });
+        IOconnection.emit('send-card', {clientCard: card});
       } else if (data.clientNumber == 'player2') {
         playedLastCard = 'player2';
         card = player2Cards.pop();
-        IOconnection.emit('send-card', { clientCard: card });
+        IOconnection.emit('send-card', {clientCard: card});
       } else if (data.clientNumber == 'player3') {
         playedLastCard = 'player3';
         card = player3Cards.pop();
-        IOconnection.emit('send-card', { clientCard: card });
+        IOconnection.emit('send-card', {clientCard: card});
       } else if (data.clientNumber == 'player4') {
         playedLastCard = 'player4';
         card = player4Cards.pop();
-        IOconnection.emit('send-card', { clientCard: card });
+        IOconnection.emit('send-card', {clientCard: card});
       }
     }
 
     // update center of table
     centerOfTable.push(card); // FIXME: make sure to update images on client
-    IOconnection.emit('send-table', { tableData: centerOfTable }); // send out updated centerOfTable
+    IOconnection.emit('send-table', {tableData: centerOfTable}); // send out updated centerOfTable
     // emit another message to change top card for center of table
   });
 
