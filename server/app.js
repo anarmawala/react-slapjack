@@ -99,19 +99,25 @@ app.use('/client', express.static(__dirname + '/client'));
 
 server.listen(8080);
 console.log('Server starting on port 8080');
+cardShuffle(imageNames);
 
 // this function runs when there is a new socket connection
 IOconnection.sockets.on('connection', (socket) => {
-  console.log(socket.handshake.query.name);
-  // clients.push(socket); //pushing clients to array
-  cardShuffle(imageNames);
-  clients.push(socket.id); // push socket.id to send private message to client
-
   clientsJoined++; // increment clients
-  console.log('connection established: ' + clientsJoined);
+  console.log(
+      'connection established with' +
+      socket.handshake.query.name +
+      ' : ' +
+      clientsJoined
+  );
 
-  socket.emit('Welcome to Slapjack');
+  socket.emit(
+      'Existing players',
+      clients.map((csocket) => csocket.handshake.query.name)
+  );
   IOconnection.emit('Player connected', socket.handshake.query.name);
+
+  clients.push(socket); // push socket to send private message to client
 
   // shuffle out cards
   // FIXME: new game need to reset deck & shuffle again
