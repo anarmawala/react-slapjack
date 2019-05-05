@@ -22,6 +22,10 @@ Username: <input type="text" id="someUserName" name="nameOfUser?" />
     console.log(data);
   });
 
+  socketConnection.on('send-table', function(data) {
+    console.log(data);
+  });
+
   function myFunction() {
     alert('The form was submitted');
     userNameVar = document.getElementById('someUserName').value;

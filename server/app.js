@@ -96,6 +96,7 @@ app.get('/', (request, response) => {
 });
 
 app.use('/client', express.static(__dirname + '/client'));
+app.use(express.static(__dirname + '/public')); // NOTE: cardImages are served through here
 
 server.listen(8080);
 console.log('Server starting on port 8080');
@@ -210,6 +211,7 @@ IOconnection.sockets.on('connection', (socket) => {
 
     // update center of table
     centerOfTable.push(card); // FIXME: make sure to update images on client
+    IOconnection.emit('send-table', {tableData: centerOfTable}); // send out updated centerOfTable
     // emit another message to change top card for center of table
   });
 
