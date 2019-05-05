@@ -24,7 +24,12 @@ class Navigation extends React.Component {
       this.setState({
         players: [...this.state.players, param]
       });
-      console.log('Player connected ' + param);
+    });
+
+    socket.on('Existing players', (param) => {
+      this.setState({
+        players: [...param, ...this.state.players]
+      });
     });
   };
 
@@ -34,7 +39,7 @@ class Navigation extends React.Component {
         <div>Hello {this.props.socket.query.slice(5)}, </div>
         <h1>Welcome to Slapjack</h1>
 
-        {Array.map(this.state.players, (value, index) => (
+        {this.state.players.map((value, index) => (
           <span key={index}>{value}</span>
         ))}
       </React.Fragment>
