@@ -28,7 +28,7 @@ const styles = {
 const NameInput = (props) => {
   const [user, setUser] = useState('Anonymous');
   const [IP, setIP] = useState('127.0.0.1');
-  const [port, setPort] = useState('8080');
+  const [port, setPort] = useState('4000');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (e) => {
