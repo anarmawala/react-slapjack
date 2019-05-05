@@ -1,41 +1,61 @@
-Username: <input type="text" id="someUserName" name="nameOfUser?" />
-<input type="button" value="submit" onclick="myFunction()" />
+<!doctype html>
+<html>
+	<head>
+	<title> SlapJack Game </title>
+	
+	<style></style>
+	
+	</head>
+	
+	<body>
+		Username: <input type="text" id="someUserName" name="nameOfUser?">
+		<input type="button" value="submit" onclick="myFunction()">
+		<button type="button" onclick = "slapVarFunction(true)" >Slap!</button>
+	</body>
+	
+	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 
-<button type="button" onclick="slapVarFunction()">Slap!</button>
-<button type="button" onclick="playHandFunction()">Play Card</button>
+	<script>
+		var userNameVar;
 
-<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+		var socketConnection = io();
 
-<script>
-  var userNameVar;
-  var clientNumberVar = 'player1';
-  var socketConnection = io();
-  socketConnection.emit('client-message', {
-    someClientData: 'data from client'
-  });
+		socketConnection.emit('client-message', { someClientData: 'data from client' });
 
-  socketConnection.on('serverMessage', function(data) {
-    console.log(data.serverData);
-  });
+		socketConnection.on('serverMessage', function(data){
+			console.log(data.serverData);
 
-  socketConnection.on('send-card', function(data) {
-    console.log(data);
-  });
+		});
 
-  function myFunction() {
-    alert('The form was submitted');
-    userNameVar = document.getElementById('someUserName').value;
-    console.log(userNameVar);
-    socketConnection.emit('client-userName-submit', {
-      clientUserNameSubmit: userNameVar
-    });
-  }
+		function myFunction() {
+			alert("The form was submitted");
+			userNameVar = document.getElementById("someUserName").value;
+			console.log(userNameVar);
+			socketConnection.emit('client-userName-submit', { clientUserNameSubmit: userNameVar });
+		}
 
-  var slapVarFunction = function() {
-    socketConnection.emit('client-slap', { clientUserName: userNameVar });
-  };
 
-  var playHandFunction = function() {
-    socketConnection.emit('play-hand', { clientNumber: clientNumberVar });
-  };
-</script>
+		var slapVarFunction = function(isPress){
+
+			socketConnection.emit('client-slap', { clientUserName: userNameVar , slapped: isPress});
+
+		}
+		
+		//Keyboard
+		document.addEventListener("keydown", keyDownHandler, false);
+		document.addEventListener("keyup", keyUpHandler, false);
+		
+		function keyDownHandler(event){
+			if(event.keyCode == 83) //slap with key s
+				slapVarFunction(true);
+			else if(event.keyCode == 80) //play with key p
+				//ADD function for playing card
+		}
+		
+		function keyUpHandler(event) {
+			//Add state variable so that when key is released it is set to false
+			if(even.keyCode == 83) 
+				slapVarFunction(false);
+		}
+	</script>
+</html>

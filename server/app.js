@@ -92,7 +92,7 @@ const imageNames = [
 
 // handles routing for static files
 app.get('/', (request, response) => {
-  response.sendFile(__dirname + '/index.html');
+  response.sendFile(__dirname + '/client/index.html');
 });
 
 app.use('/client', express.static(__dirname + '/client'));
@@ -186,25 +186,26 @@ IOconnection.sockets.on('connection', (socket) => {
 
   socket.on('play-hand', (data) => {
     // FIXME: only allow this once all four clients joined
-    let card = null;
+    const card = null;
     if (clientsJoined == 4) {
       // pop a card from end of array
       if (data.clientNumber == 'player1') {
         playedLastCard = 'player1';
         card = player1Cards.pop();
-        IOconnection.emit('send-card', {clientCard: card});
+        io.sockets.connected[clients[0]].emit('send-card', card); // catch this on client side
       } else if (data.clientNumber == 'player2') {
         playedLastCard = 'player2';
+
         card = player2Cards.pop();
-        IOconnection.emit('send-card', {clientCard: card});
+        io.sockets.connected[clients[1]].emit('send-card', card);
       } else if (data.clientNumber == 'player3') {
         playedLastCard = 'player3';
         card = player3Cards.pop();
-        IOconnection.emit('send-card', {clientCard: card});
+        io.sockets.connected[clients[2]].emit('send-card', card);
       } else if (data.clientNumber == 'player4') {
         playedLastCard = 'player4';
         card = player4Cards.pop();
-        IOconnection.emit('send-card', {clientCard: card});
+        io.sockets.connected[clients[3]].emit('send-card', card);
       }
     }
 
