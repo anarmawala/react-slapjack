@@ -11,7 +11,8 @@ class Navigation extends React.Component {
 
     this.state = {
       gameStarted: false,
-      players: []
+      players: [],
+      message: ''
     };
   }
 
@@ -31,6 +32,12 @@ class Navigation extends React.Component {
         players: [...param, ...this.state.players]
       });
     });
+
+    socket.on('Fullhouse', () => {
+      this.setState({
+        message: 'Game is already full!'
+      });
+    });
   };
 
   render() {
@@ -42,6 +49,8 @@ class Navigation extends React.Component {
         {this.state.players.map((value, index) => (
           <span key={index}>{value}</span>
         ))}
+
+        {this.state.message}
       </React.Fragment>
     );
   }

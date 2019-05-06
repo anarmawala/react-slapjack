@@ -96,7 +96,9 @@ app.get('/', (request, response) => {
 });
 
 app.use('/client', express.static(__dirname + '/client'));
-app.use(express.static(__dirname + '/public')); // NOTE: cardImages are served through here
+
+// NOTE: cardImages are served through here
+app.use(express.static(__dirname + '/public'));
 
 server.listen(4000);
 console.log('Server starting on port 4000');
@@ -104,6 +106,12 @@ cardShuffle(imageNames);
 
 // this function runs when there is a new socket connection
 IOconnection.sockets.on('connection', (socket) => {
+  if (clientsJoined == 4) {
+    socket.emit('Fullhouse');
+    socket.disconnect(true);
+    return;
+  }
+
   cardShuffle(imageNames);
   clientsJoined++; // increment clients
   console.log(
