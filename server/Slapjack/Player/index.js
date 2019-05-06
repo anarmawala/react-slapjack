@@ -1,13 +1,22 @@
+'use strict';
+
 /**
  * Player
  *
  * Hold and mutates specific players and their cards
  */
-class Player {
+const Player = class {
   /**
    * Initializes the variables
+   *
+   * @param {string} _id the given id
+   * @param {string} _userName  the given username
    */
-  constructor() {
+  constructor(_id, _userName) {
+    // identifiers
+    this.id = _id;
+    this.userName = _userName;
+
     this.playerCards = [];
   }
 
@@ -21,10 +30,11 @@ class Player {
 
   /**
    *
-   * @param {*} card that will be added to the player's hand
+   * @param {Card} card that will be added to the player's hand
    */
   addToHand(card) {
-    this.playerCards.push(card);
+    // this.playerCards.push(card);
+    this.playerCards = [card].concat(this.playerCards);
   }
 
   /**
@@ -34,6 +44,6 @@ class Player {
   removeFromHand() {
     return this.playerCards.pop();
   }
-}
+};
 
-export default Player;
+module.exports = Player;
