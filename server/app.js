@@ -14,8 +14,11 @@ const player2Cards = [];
 const player3Cards = [];
 const player4Cards = [];
 const centerOfTable = [];
-const slapped = false;
+const slapped = true;
 let clientsJoined = 0;
+
+// const Slapjack = require('./Slapjack/slapjack.js');
+// const slapJackObj = new Slapjack();
 
 // Cards
 const possibleValues = [
@@ -123,17 +126,39 @@ IOconnection.sockets.on('connection', (socket) => {
 
   // shuffle out cards
   // FIXME: new game need to reset deck & shuffle again
-  if (clientsJoined == 4) {
-    for (let i = 0; i < 52; i = i + 4) {
-      let card = imageNames.pop();
-      player1Cards.push(card);
+  // if (clientsJoined == 4) {
+  //   for (let i = 0; i < 52; i = i + 4) {
+  //     let card = imageNames.pop();
+  //     player1Cards.push(card);
 
+  //     card = imageNames.pop();
+  //     player2Cards.push(card);
+
+  //     card = imageNames.pop();
+  //     player3Cards.push(card);
+
+  //     card = imageNames.pop();
+  //     player4Cards.push(card);
+  //   }
+  // }
+  let card = null;
+  if (clientsJoined == 1) {
+    for (let i = 0; i < 13; i++) {
+      card = imageNames.pop();
+      player1Cards.push(card);
+    }
+  } else if (clientsJoined == 2) {
+    for (let i = 0; i < 13; i++) {
       card = imageNames.pop();
       player2Cards.push(card);
-
+    }
+  } else if (clientsJoined == 3) {
+    for (let i = 0; i < 13; i++) {
       card = imageNames.pop();
       player3Cards.push(card);
-
+    }
+  } else if (clientsJoined == 4) {
+    for (let i = 0; i < 13; i++) {
       card = imageNames.pop();
       player4Cards.push(card);
     }
@@ -141,12 +166,13 @@ IOconnection.sockets.on('connection', (socket) => {
 
   socket.on('client-slap', (data) => {
     // will only execute is slap is true
-    if (data.slapped == true) {
+    if (slapped == true) {
       // how do I change to false for next jack but avoid executing this for multiple clients for a single jack?
       console.log('slap from the following user' + data.clientNumber);
 
       // If top card for center of table is jack → move card to winner’s hand
-      const topCard = centerOfTable.get(centerOfTable.length - 1);
+      let topCard = null;
+      topCard = centerOfTable.pop();
 
       if (topCard.charAt(0) == 'J') {
         // if topCard equals any of the 4 jacks
@@ -196,7 +222,7 @@ IOconnection.sockets.on('connection', (socket) => {
 
   socket.on('play-hand', (data) => {
     // FIXME: only allow this once all four clients joined
-    const card = null;
+    let card = null;
     if (clientsJoined == 4) {
       // pop a card from end of array
       if (data.clientNumber == 'player1') {

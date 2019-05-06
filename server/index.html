@@ -36,7 +36,7 @@ Username: <input type="text" id="someUserName" name="nameOfUser?" />
   }
 
   var slapVarFunction = function() {
-    socketConnection.emit('client-slap', { clientUserName: userNameVar });
+    socketConnection.emit('client-slap', { clientNumber: 'player1' });
   };
 
   var playHandFunction = function() {
