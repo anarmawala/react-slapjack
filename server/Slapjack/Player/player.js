@@ -3,7 +3,7 @@
  *
  * Hold and mutates specific players and their cards
  */
-class Player {
+module.exports = class Player {
   /**
    * Initializes the variables
    *
@@ -69,6 +69,4 @@ class Player {
   removeFromHand() {
     return this.playerCards.pop();
   }
-}
-
-export default Player;
+};
