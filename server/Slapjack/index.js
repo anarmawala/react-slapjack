@@ -10,6 +10,7 @@ const Slapjack = class {
    * Initializes the variables
    */
   constructor() {
+    this.socketClients = [];
     this.players = [];
     this.inGame = false;
     this.cardPile = new Deck(true);
@@ -76,6 +77,16 @@ const Slapjack = class {
         this.cardPile.cards.push(this.players[index].playerCards.pop());
       }
     }
+  }
+
+  // eslint-disable-next-line require-jsdoc
+  numClients() {
+    return players.length;
+  }
+
+  // eslint-disable-next-line require-jsdoc
+  returnSocketClients() {
+    return socketClients;
   }
 };
 
