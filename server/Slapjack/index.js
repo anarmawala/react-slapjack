@@ -10,7 +10,6 @@ const Slapjack = class {
    * Initializes the variables
    */
   constructor() {
-    this.socketClients = [];
     this.players = [];
     this.inGame = false;
     this.cardPile = new Deck(true);
@@ -41,7 +40,10 @@ const Slapjack = class {
     }
   }
 
-  // eslint-disable-next-line require-jsdoc
+  /**
+   *
+   * @param {*} id the id used to find a player
+   */
   playHand(id) {
     const index = this.players.findIndex((player, index, obj) => {
       return id == player.id;
@@ -59,7 +61,10 @@ const Slapjack = class {
     }
   }
 
-  // eslint-disable-next-line require-jsdoc
+  /**
+   *
+   * @param {*} id the id used to find a player
+   */
   slapHand(id) {
     const index = this.players.findIndex((player, index, obj) => {
       return id == player.id;
@@ -79,14 +84,11 @@ const Slapjack = class {
     }
   }
 
-  // eslint-disable-next-line require-jsdoc
+  /**
+   * @return {int} returns the number of players
+   */
   numClients() {
     return players.length;
-  }
-
-  // eslint-disable-next-line require-jsdoc
-  returnSocketClients() {
-    return socketClients;
   }
 };
 

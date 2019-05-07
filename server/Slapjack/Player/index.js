@@ -11,12 +11,13 @@ const Player = class {
    *
    * @param {string} _id the given id
    * @param {string} _userName  the given username
+   * @param {Socket} _socket  the socket for the player
    */
-  constructor(_id, _userName) {
+  constructor(_id, _userName, _socket) {
     // identifiers
     this.id = _id;
     this.userName = _userName;
-
+    this.socket = [];
     this.playerCards = [];
   }
 

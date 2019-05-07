@@ -3,7 +3,7 @@ const app = express();
 const cors = require('cors');
 app.use(cors());
 const server = require('http').createServer(app);
-const IOconnection = require('socket.io')(server, {}); // making connection instance
+const IOconnection = require('socket.io')(server, {});
 
 const Player = require('./Slapjack/Player');
 const Deck = require('./Slapjack/Deck');
@@ -34,7 +34,7 @@ IOconnection.sockets.on('connection', (socket) => {
   }
 
   console.log(
-      'connection established with' +
+      'connection established with ' +
       socket.handshake.query.name +
       ' : ' +
       Slapjack.numClients()
@@ -42,14 +42,8 @@ IOconnection.sockets.on('connection', (socket) => {
 
   socket.emit(
       'Existing players',
-      Slapjack.returnSocketClients().map(
-          (csocket) => csocket.handshake.query.name
-      )
+      Slapjack.players().map((player) => player.socket.handshake.query.name)
   );
 
   IOconnection.emit('Player connected', socket.handshake.query.name);
-
-  Slapjack.returnSocketClients().push(socket); // push socket to send private message to client
-  //
-  //
 });
