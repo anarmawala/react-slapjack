@@ -14,6 +14,7 @@ const Slapjack = class {
     this.inGame = false;
     this.cardPile = new Deck(true);
     this.table = [];
+    this.turn = 0;
   }
 
   /**
@@ -44,8 +45,17 @@ const Slapjack = class {
     const index = this.players.findIndex((player, index, obj) => {
       return id == player.id;
     });
-    console.log(this.players[index]);
-    this.cardPile.cards.push(this.players[index].removeFromHand());
+
+    if (this.turn == index) {
+      this.cardPile.cards.push(this.players[index].removeFromHand());
+      this.turn += 1;
+
+      if (this.turn == 4) this.turn = 0;
+    } else {
+      this.cardPile.cards = [this.players[index].removeFromHand()].concat(
+          this.cardPile.cards
+      );
+    }
   }
 
   // eslint-disable-next-line require-jsdoc
@@ -59,13 +69,13 @@ const Slapjack = class {
       while (this.cardPile.cards.length > 0) {
         this.players[index].addToHand(this.cardPile.cards.pop());
       }
+
+      this.turn = index;
     } else {
       if (this.players[index].playerCards.length > 0) {
         this.cardPile.cards.push(this.players[index].playerCards.pop());
       }
     }
-    console.log(this.players[index]);
-    console.log(this.cardPile);
   }
 };
 
