@@ -25,9 +25,11 @@ game.slapHand('4');
 server.listen(4000);
 console.log('Server starting on port 4000');
 
+const slapjack = new Slapjack();
+
 // socket connection: logic for communication b/w server-client goes here
 IOconnection.sockets.on('connection', (socket) => {
-  if (Slapjack.numClients() == 4) {
+  if (slapjack.numClients() == 4) {
     socket.emit('Fullhouse');
     socket.disconnect(true);
     return;
@@ -37,12 +39,12 @@ IOconnection.sockets.on('connection', (socket) => {
       'connection established with ' +
       socket.handshake.query.name +
       ' : ' +
-      Slapjack.numClients()
+      slapjack.numClients()
   );
 
   socket.emit(
       'Existing players',
-      Slapjack.players().map((player) => player.socket.handshake.query.name)
+      slapjack.players().map((player) => player.socket.handshake.query.name)
   );
 
   IOconnection.emit('Player connected', socket.handshake.query.name);

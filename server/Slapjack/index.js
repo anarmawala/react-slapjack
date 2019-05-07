@@ -70,7 +70,6 @@ const Slapjack = class {
       return id == player.id;
     });
 
-    console.log(this.players[index]);
     if (this.cardPile.shouldSlap === true) {
       while (this.cardPile.cards.length > 0) {
         this.players[index].addToHand(this.cardPile.cards.pop());
