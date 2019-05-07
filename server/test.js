@@ -35,17 +35,22 @@ IOconnection.sockets.on('connection', (socket) => {
     return;
   }
 
+  socket.emit(
+      'Existing players',
+      slapjack.players.map((player) => player.userName)
+  );
+
   console.log(
       'connection established with ' +
       socket.handshake.query.name +
+      ' ' +
+      socket.handshake.query.t +
       ' : ' +
       slapjack.numClients()
   );
 
-  socket.emit(
-      'Existing players',
-      slapjack.players.map((player) => player.socket.handshake.query.name)
+  slapjack.addPlayer(
+      new Player(socket.handshake.query.t, socket.handshake.query.name)
   );
-
   IOconnection.emit('Player connected', socket.handshake.query.name);
 });
