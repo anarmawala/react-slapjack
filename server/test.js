@@ -44,7 +44,7 @@ IOconnection.sockets.on('connection', (socket) => {
 
   socket.emit(
       'Existing players',
-      slapjack.players().map((player) => player.socket.handshake.query.name)
+      slapjack.players.map((player) => player.socket.handshake.query.name)
   );
 
   IOconnection.emit('Player connected', socket.handshake.query.name);
