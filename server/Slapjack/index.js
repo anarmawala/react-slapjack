@@ -87,7 +87,7 @@ const Slapjack = class {
    * @return {int} returns the number of players
    */
   numClients() {
-    return players.length;
+    return this.players.length;
   }
 };
 
