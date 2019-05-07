@@ -1,3 +1,10 @@
+const express = require('express');
+const app = express();
+const cors = require('cors');
+app.use(cors());
+const server = require('http').createServer(app);
+const IOconnection = require('socket.io')(server, {}); // making connection instance
+
 const Player = require('./Slapjack/Player');
 const Deck = require('./Slapjack/Deck');
 const Slapjack = require('./Slapjack');
@@ -14,3 +21,11 @@ game.addPlayer(new Player('4', 'Angela'));
 
 game.playHand('4');
 game.slapHand('4');
+
+server.listen(4000);
+console.log('Server starting on port 4000');
+
+// socket connection
+IOconnection.sockets.on('connection', (socket) => {
+  // logic for communication b/w server-client goes here
+});
