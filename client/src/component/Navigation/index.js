@@ -27,10 +27,28 @@ class Navigation extends React.Component {
       });
     });
 
+    socket.on('Player disconnected', (param) => {
+      this.setState({
+        players: [...param]
+      });
+    });
+
     socket.on('Existing players', (param) => {
       this.setState({
         players: [...param, ...this.state.players]
       });
+    });
+
+    socket.on('Game started', () => {
+      this.setState({ gameStarted: true });
+    });
+
+    socket.on('Reset', () => {
+      this.setState({ gameStarted: false });
+    });
+
+    socket.on('disconnect', () => {
+      this.setState({ players: [] });
     });
 
     socket.on('Fullhouse', () => {
@@ -51,6 +69,8 @@ class Navigation extends React.Component {
         ))}
 
         {this.state.message}
+
+        {this.state.gameStarted && <span>Game Started</span>}
       </React.Fragment>
     );
   }
