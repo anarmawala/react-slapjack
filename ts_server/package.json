@@ -8,7 +8,8 @@
     "build": "tsc",
     "watch-ts": "tsc -w",
     "watch-node": "nodemon dist/server.js",
-    "start": "concurrently -k -p \"[{name}]\" -n \"TypeScript, Node\" -c \"yello.bold, cyan.bold\" \"npm run-script watch-ts\" \"npm run-script watch-node\"",
+    "start": "node dist/server.js",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript, Node\" -c \"yello.bold, cyan.bold\" \"npm run-script watch-ts\" \"npm run-script watch-node\"",
     "test": "mocha -r ts-node/register src/**/*.spec.ts"
   },
   "dependencies": {
