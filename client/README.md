@@ -1,4 +1,4 @@
-## Slapjack Client Web Server
+# Slapjack Client Web Server
 
 Client(HTML) Web Server, that serves HTML code to client
 

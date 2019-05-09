@@ -1,4 +1,4 @@
-## Socket.io Server
+# Socket.io Server
 
 Socket.io(logic) Server, the brain of the game, where all client connect here via WebSocket.
 
