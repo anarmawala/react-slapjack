@@ -1,4 +1,4 @@
-import Card from './card';
+import Card from '../Card';
 
 class Player extends Array<Card> {
   public id: string;

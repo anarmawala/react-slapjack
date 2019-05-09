@@ -1,6 +1,6 @@
-import Card from './card';
-import Rank from './rank';
-import Suite from './suites';
+import Card from '../Card';
+import Rank from '../Rank';
+import Suite from '../Suite';
 
 // this algorithm was taken from StackOverflow
 // URL: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
@@ -32,7 +32,8 @@ class Deck extends Array<Card> {
   }
 
   public shouldSlap() {
-    if (this[this.length - 1].isJack) return true;
+    if (this.length === 0) return false;
+    else if (this[this.length - 1].isJack()) return true;
     else if (this.length < 3) return false;
     else return this[this.length - 1].rank === this[this.length - 3].rank;
   }

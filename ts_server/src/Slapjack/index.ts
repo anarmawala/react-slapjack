@@ -1,5 +1,5 @@
-import Player from './player';
-import Deck from './deck';
+import Player from './Player';
+import Deck from './Deck';
 
 class Slapjack {
   // logistics
@@ -52,10 +52,12 @@ class Slapjack {
 
     if (this.turnCounter == index) {
       this.pile.push(this.players[index].pop());
-      this.turnCounter += 1;
 
-      if (this.turnCounter == 4) this.turnCounter = 0;
-    } else {
+      do {
+        this.turnCounter += 1;
+        if (this.turnCounter == 4) this.turnCounter = 0;
+      } while (this.players[this.turnCounter].length <= 0);
+    } else if (this.players[index].length > 0) {
       this.pile.unshift(this.players[index].pop());
     }
   }
@@ -78,12 +80,10 @@ class Slapjack {
     }
   }
 
-  public getPlayer(id: string) {
-    return this.players[
-      this.players.findIndex((player) => {
-        return id == player.id;
-      })
-    ];
+  public getPlayerIndex(id: string) {
+    return this.players.findIndex((player) => {
+      return id == player.id;
+    });
   }
 
   public reset(id: string) {

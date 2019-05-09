@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const player_1 = require("./player");
-const deck_1 = require("./deck");
+const Player_1 = require("./Player");
+const Deck_1 = require("./Deck");
 class Slapjack {
     constructor() {
         this.newPlayer = (id, name) => {
             if (!this.gameStarted) {
-                this.players.push(new player_1.default(id, name));
+                this.players.push(new Player_1.default(id, name));
                 // stopping additional players from joining
                 if (this.players.length === 4) {
                     this.startGame();
@@ -19,7 +19,7 @@ class Slapjack {
         };
         this.startGame = () => {
             this.gameStarted = true;
-            const initCard = new deck_1.default(true);
+            const initCard = new Deck_1.default(true);
             while (initCard.length >= 4) {
                 this.players.forEach((player) => {
                     player.push(initCard.pop());
@@ -28,7 +28,7 @@ class Slapjack {
         };
         this.gameStarted = false;
         this.turnCounter = 0;
-        this.pile = new deck_1.default(false);
+        this.pile = new Deck_1.default(false);
         this.players = new Array();
     }
     playHand(id) {
@@ -37,11 +37,13 @@ class Slapjack {
         });
         if (this.turnCounter == index) {
             this.pile.push(this.players[index].pop());
-            this.turnCounter += 1;
-            if (this.turnCounter == 4)
-                this.turnCounter = 0;
+            do {
+                this.turnCounter += 1;
+                if (this.turnCounter == 4)
+                    this.turnCounter = 0;
+            } while (this.players[this.turnCounter].length <= 0);
         }
-        else {
+        else if (this.players[index].length > 0) {
             this.pile.unshift(this.players[index].pop());
         }
     }
@@ -61,10 +63,10 @@ class Slapjack {
             }
         }
     }
-    getPlayer(id) {
-        return this.players[this.players.findIndex((player) => {
+    getPlayerIndex(id) {
+        return this.players.findIndex((player) => {
             return id == player.id;
-        })];
+        });
     }
     reset(id) {
         this.gameStarted = false;

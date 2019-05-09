@@ -3,7 +3,7 @@ import { compose } from 'recompose';
 import { consumerSocket } from '../Socket/context';
 
 import Lobby from '../Lobby';
-// import Slapjack from '../Lobby';
+import Slapjack from '../Slapjack';
 
 class Navigation extends React.Component {
   constructor(props) {
@@ -66,7 +66,7 @@ class Navigation extends React.Component {
     return (
       <React.Fragment>
         {this.state.gameStarted ? (
-          <span>Game Started</span>
+          <Slapjack />
         ) : (
           <Lobby
             name={this.props.socket.query.slice(5)}

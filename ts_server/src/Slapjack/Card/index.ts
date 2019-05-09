@@ -1,5 +1,5 @@
-import Suite from './suites';
-import Rank from './rank';
+import Suite from '../Suite';
+import Rank from '../Rank';
 
 class Card {
   public suite: Suite;
