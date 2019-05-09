@@ -24,7 +24,6 @@ class Slapjack {
 
       // stopping additional players from joining
       if (this.players.length === 4) {
-        console.log('dsafjkhdksjlfhkl');
         this.startGame();
       }
 

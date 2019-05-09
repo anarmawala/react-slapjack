@@ -5,18 +5,18 @@ const PORT = 4000;
 const express = require("express");
 const cors = require("cors");
 // classes imports
-const slapjack_1 = require("./Slapjack/slapjack");
+const Slapjack_1 = require("./Slapjack");
 // setup the app
 const app = express();
 app.set('port', process.env.PORT || PORT);
 app.use(cors());
-const game = new slapjack_1.default();
+const game = new Slapjack_1.default();
 // make the server and bind it to the app
 let http = require('http').Server(app);
 let io = require('socket.io')(http);
 io.on('connect', (socket) => {
     const name = socket.handshake.query.name;
-    const id = socket.handshake.query.t;
+    const id = socket.id;
     console.log('Connection established with ' + name);
     if (game.newPlayer(id, name)) {
         //? send the existing list to they can see who is in lobby
@@ -27,7 +27,6 @@ io.on('connect', (socket) => {
         io.emit('Player connected', name);
         if (game.gameStarted) {
             io.emit('Game started');
-            console.log('h');
         }
     }
     else {
@@ -46,4 +45,6 @@ io.on('connect', (socket) => {
 const server = http.listen(PORT, () => {
     console.log('Server running on port ' + PORT);
 });
+// References
+// io.to(`${socketId}`).emit('hey', 'I just met you');
 //# sourceMappingURL=server.js.map

@@ -9,7 +9,6 @@ class Slapjack {
                 this.players.push(new player_1.default(id, name));
                 // stopping additional players from joining
                 if (this.players.length === 4) {
-                    console.log('dsafjkhdksjlfhkl');
                     this.startGame();
                 }
                 return true;

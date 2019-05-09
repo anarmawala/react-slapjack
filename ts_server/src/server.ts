@@ -5,7 +5,7 @@ import * as express from 'express';
 import * as cors from 'cors';
 
 // classes imports
-import Slapjack from './Slapjack/slapjack';
+import Slapjack from './Slapjack';
 
 // setup the app
 const app = express();
@@ -20,7 +20,7 @@ let io = require('socket.io')(http);
 
 io.on('connect', (socket: any) => {
   const name = socket.handshake.query.name;
-  const id = socket.handshake.query.t;
+  const id = socket.id;
   console.log('Connection established with ' + name);
 
   if (game.newPlayer(id, name)) {
@@ -37,7 +37,6 @@ io.on('connect', (socket: any) => {
 
     if (game.gameStarted) {
       io.emit('Game started');
-      console.log('h');
     }
   } else {
     //? there are already four players
@@ -61,3 +60,6 @@ io.on('connect', (socket: any) => {
 const server = http.listen(PORT, () => {
   console.log('Server running on port ' + PORT);
 });
+
+// References
+// io.to(`${socketId}`).emit('hey', 'I just met you');

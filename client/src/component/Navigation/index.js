@@ -2,7 +2,7 @@ import React from 'react';
 import { compose } from 'recompose';
 import { consumerSocket } from '../Socket/context';
 
-// import Lobby from '../Lobby';
+import Lobby from '../Lobby';
 // import Slapjack from '../Lobby';
 
 class Navigation extends React.Component {
@@ -56,21 +56,24 @@ class Navigation extends React.Component {
         message: 'Game is already full!'
       });
     });
+
+    socket.on('alert', () => {
+      alert('REcieved');
+    });
   };
 
   render() {
     return (
       <React.Fragment>
-        <div>Hello {this.props.socket.query.slice(5)}, </div>
-        <h1>Welcome to Slapjack</h1>
-
-        {this.state.players.map((value, index) => (
-          <span key={index}>{value}</span>
-        ))}
-
-        {this.state.message}
-
-        {this.state.gameStarted && <span>Game Started</span>}
+        {this.state.gameStarted ? (
+          <span>Game Started</span>
+        ) : (
+          <Lobby
+            name={this.props.socket.query.slice(5)}
+            players={this.state.players}
+            message={this.state.message}
+          />
+        )}
       </React.Fragment>
     );
   }
