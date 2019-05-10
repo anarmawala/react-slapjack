@@ -86,6 +86,10 @@ class Slapjack extends React.Component {
     window.addEventListener('keypress', this.handleSend);
   };
 
+  componentWillUnmount = () => {
+    window.removeEventListener('keypress');
+  };
+
   handleSend = (e) => {
     // 32 space - play
     // 13 enter - slap
@@ -104,16 +108,14 @@ class Slapjack extends React.Component {
     return (
       <React.Fragment>
         {cards.length === turn.length && cards.length === 4 && (
-          <Grid container className={classes.root} spacing={64}>
+          <Grid container className={classes.root} spacing={40}>
             <Grid item lg={12} xs={12}>
               <Grid
-                lg={12}
-                xs={12}
                 container
                 className={classes.demo}
                 justify="center"
                 spacing={Number(16)}>
-                <Grid item>
+                <Grid item lg={12} xs={12}>
                   <Badge
                     className={classes.margin}
                     badgeContent={cards[0].cards}
