@@ -13,11 +13,6 @@ import deepOrange from '@material-ui/core/colors/deepOrange';
 import deepPurple from '@material-ui/core/colors/deepPurple';
 
 const styles = (theme) => ({
-  root: {},
-  paper: {
-    height: 450,
-    width: 400
-  },
   control: {
     padding: theme.spacing.unit * 2
   },
@@ -110,9 +105,10 @@ class Slapjack extends React.Component {
       <React.Fragment>
         {cards.length === turn.length && cards.length === 4 && (
           <Grid container className={classes.root} spacing={64}>
-            <Grid item lg={12}>
+            <Grid item lg={12} xs={12}>
               <Grid
                 lg={12}
+                xs={12}
                 container
                 className={classes.demo}
                 justify="center"
@@ -151,7 +147,7 @@ class Slapjack extends React.Component {
                     </Avatar>
                   </Badge>
                 </Grid>
-                <Grid item lg={12}>
+                <Grid item lg={12} xs={12}>
                   <Badge
                     className={classes.margin}
                     badgeContent={middle.length}
