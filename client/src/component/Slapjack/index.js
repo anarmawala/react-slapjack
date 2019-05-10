@@ -87,7 +87,7 @@ class Slapjack extends React.Component {
   };
 
   componentWillUnmount = () => {
-    window.removeEventListener('keypress');
+    window.removeEventListener('keypress', this.handleSend);
   };
 
   handleSend = (e) => {
