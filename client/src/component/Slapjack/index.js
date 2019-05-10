@@ -146,7 +146,7 @@ class Slapjack extends React.Component {
                     className={classes.margin}
                     badgeContent={cards[3].cards}
                     color="primary">
-                    <Avatar className={classes.purpleAvatar}>
+                    <Avatar className={classes.orangeAvatar}>
                       {cards[3].name.slice(0, 3)}
                     </Avatar>
                   </Badge>
