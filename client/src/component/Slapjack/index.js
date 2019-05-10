@@ -127,7 +127,8 @@ class Slapjack extends React.Component {
                   <Badge
                     className={classes.margin}
                     badgeContent={cards[1].cards}
-                    color="primary">
+                    color="primary"
+                    variant={turn[1] ? 'dot' : 'standard'}>
                     <Avatar className={classes.orangeAvatar}>
                       {cards[1].name.slice(0, 3)}
                     </Avatar>
@@ -135,7 +136,8 @@ class Slapjack extends React.Component {
                   <Badge
                     className={classes.margin}
                     badgeContent={cards[2].cards}
-                    color="primary">
+                    color="primary"
+                    variant={turn[2] ? 'dot' : 'standard'}>
                     <Avatar className={classes.purpleAvatar}>
                       {cards[2].name.slice(0, 3)}
                     </Avatar>
@@ -143,7 +145,8 @@ class Slapjack extends React.Component {
                   <Badge
                     className={classes.margin}
                     badgeContent={cards[3].cards}
-                    color="primary">
+                    color="primary"
+                    variant={turn[3] ? 'dot' : 'standard'}>
                     <Avatar className={classes.orangeAvatar}>
                       {cards[3].name.slice(0, 3)}
                     </Avatar>
