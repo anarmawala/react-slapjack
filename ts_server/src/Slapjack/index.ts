@@ -75,7 +75,7 @@ class Slapjack {
       this.turnCounter = index;
     } else {
       if (this.players[index].length > 0) {
-        this.pile.push(this.players[index].pop());
+        this.pile.unshift(this.players[index].pop());
       }
     }
   }
