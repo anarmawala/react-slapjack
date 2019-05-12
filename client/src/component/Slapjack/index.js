@@ -6,6 +6,7 @@ import { consumerSocket } from '../Socket/context';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import Badge from '@material-ui/core/Badge';
 import Avatar from '@material-ui/core/Avatar';
 import deepOrange from '@material-ui/core/colors/deepOrange';
@@ -193,3 +194,43 @@ export default compose(
   withStyles(styles),
   consumerSocket
 )(Slapjack);
+
+{
+  /* <React.Fragment>
+  <div>SPACE for play || ENTER for slap</div>
+  <br />
+  {cards.length === turn.length && cards.length === 4 && (
+    <React.Fragment>
+      <table>
+        <tr>
+          <td>
+            {cards[1].name + ' has ' + cards[1].cards + ' cards'} <br />
+            {cards[0].name + ' has ' + cards[0].cards + ' cards'} <br />
+            {cards[2].name + ' has ' + cards[2].cards + ' cards'} <br />
+            {cards[3].name + ' has ' + cards[3].cards + ' cards'} <br />
+          </td>
+          <br />
+          <td>
+            {turn !== null && turn[0] === true && <span>Your Turn</span>}
+            {middle.length > 0 ? (
+              <img
+                src={require('./images/' +
+                  (!isNaN(wordsToNumbers(middle[middle.length - 1].rank))
+                    ? wordsToNumbers(middle[middle.length - 1].rank)
+                    : middle[middle.length - 1].rank.slice(0, 1)) +
+                  middle[middle.length - 1].suite.slice(0, 1) +
+                  '.png')}
+                width="200"
+                alt=""
+              />
+            ) : (
+              <img src={require('./images/blue_back.png')} width="200" alt="" />
+            )}
+            {middle.length}
+          </td>
+        </tr>
+      </table>
+    </React.Fragment>
+  )}
+</React.Fragment>; */
+}

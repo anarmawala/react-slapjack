@@ -1,5 +1,6 @@
 import React from 'react';
 import * as io from 'socket.io-client';
+import * as _ from 'lodash';
 const SocketContext = React.createContext(null);
 
 export const consumerSocket = (Component) => (props) => (

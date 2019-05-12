@@ -45,6 +45,10 @@ const NameInput = (props) => {
   return (
     <React.Fragment>
       <h1 style={{ marginBottom: '5px' }}>Slapjack</h1>
+      <p style={{ marginTop: '5px' }}>
+        Brought to you by <br />
+        Arshad | Jigar | Angela | Clark
+      </p>
       <form onSubmit={handleSubmit} style={styles.form}>
         <input
           type="text"
