@@ -6,7 +6,7 @@
   "dependencies": {
     "@material-ui/core": "^3.9.3",
     "core-js": "3",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-awesome-button": "^6.1.0",
