@@ -21,7 +21,7 @@
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
-    "concurrently": "^4.1.2",
+    "concurrently": "^5.2.0",
     "nodemon": "^2.0.4"
   }
 }
