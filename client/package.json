@@ -5,7 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
-    "core-js": "^3.6.5",
+    "core-js": "^3.27.1",
     "lodash": "^4.17.20",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
